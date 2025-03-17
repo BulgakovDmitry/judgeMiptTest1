@@ -1,43 +1,23 @@
 #include <stdio.h>
 
-int toDecimal(int number, int base) {
-    int decimal = 0;
-    int power = 1;
-    while (number > 0) {
-        decimal += (number % 10) * power;
-        number /= 10;
-        power *= base;
-    }
-    return decimal;
-}
-
-int isAutomorphic(int number, int base) {
-    long long square = (long long)number * number;
-    int original = number;
-    while (original > 0) {
-        if (square % base != original % base) {
-            return 0;
-        }
-        square /= base;
-        original /= base;
-    }
-    return 1;
-}
-
-int main() {
-    int x;
+int main()
+{
+    int x = 0;
     scanf("%d", &x);
+    long long max_num = x * x * x - 1;
+    long long min_num = x * x;
+    long long result = 0;
 
-    int maxNumber = 0;
-
-    for (int i = x * x; i < x * x * x; i++) {
-        if (isAutomorphic(i, x)) {
-            maxNumber = i;
+    for (long long num = max_num; num >= min_num; num--)
+    {
+        long long sq = num * num;
+        if (sq % (max_num + 1) == num)
+        {
+            result = num;
+            break;
         }
     }
-
-    int decimalNumber = toDecimal(maxNumber, x);
-    printf("%d\n", decimalNumber);
+    printf("%lld", result);
 
     return 0;
 }
